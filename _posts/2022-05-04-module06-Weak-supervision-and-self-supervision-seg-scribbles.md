@@ -50,7 +50,10 @@ arg\,min_{\theta} \sum_{p \in \Omega_{L}}H(Y_p,S_p)+\sum_{p \in \Omega_{U}}H(X_p
 where $$Y$$ are the set of labeled pixels, $$X$$ is the set of proposed groundtruth,  $$f_{\theta}(I)$$ is the network outputs, $$\Omega_{L}$$ are the set of labeled pixels, $$\Omega_{U}$$ are the set of unlabeled pixels, and $$H$$ is the standard cross entropy loss. Is discussed before, $$X$$ is fixed. The objective for the groundtruth proposal is 
 
 $$
-arg\,min_{X} \sum_{p \in \Omega_{U}}H(X_p,S_p) + \lambda R(X)$$ where $$R$$ is the dense CRF loss and the other terms are defined as before. In this case, we fix the network parameters and optimize for the groundtruth proposals.
+arg\,min_{X} \sum_{p \in \Omega_{U}}H(X_p,S_p) + \lambda R(X)
+$$ 
+
+where $$R$$ is the dense CRF loss and the other terms are defined as before. In this case, we fix the network parameters and optimize for the groundtruth proposals.
 
 
 ### Tree Energy Loss: Towards Sparsely Annotated Semantic Segmentation
