@@ -26,10 +26,12 @@ As was mentioned, the fundamental issue with scribbles is the sparse annotation:
 
 ### ScribbleSup
 The first major paper to use scribbles for semenatic segmentation was "ScribbleSup: Scribble-supervised convolutional networks for semantic segmentation" [3]. In their paper, they generate an oversegmentation using [4]. They then assign labels to the segments based on the minimization of the following objective function
+
 $$
 \sum_{i}\psi_i(y_i|X,S) + \sum_{i,i}\psi_{i,j}(y_i,y_j|X,S)
 $$
-where $$ \psi_i = \psi^{scribble}+\psi^{net}$$ and $$X$$ is the set of segments, $$S$$ is the set of scribbles and scribble category labels, and the set of $$y_i$$ are the label assignments for segment $$i$$. 
+
+where $$ \psi_i = \psi^{scribble}+\psi^{net}$$, $$X$$ is the set of segments, $$S$$ is the set of scribbles and scribble category labels, and the set of $$y_i$$ are the label assignments for segment $$i$$. 
 
 If the scribbles intersect with the segment, $$\psi^{scribble}$$ is $$0$$; otherwise each label has an equal positive value. $$\psi^{net}$$ represents the deep learning network probability for the label. For segments with the different labels, the value of $$\psi_{i,j}$$ increases depending on how close the segments are in appearance (measured in terms of color and texture). This results in the following objective
 
@@ -37,7 +39,7 @@ $$
 \sum_{i}\psi_i^{scribble}(y_i|X,S) + \sum_{i,i}-logP(y_i|\Theta,X)+ \sum_{i,i}\psi_{i,j}(y_i,y_j|X,S)
 $$
 
-where $$\Theta$$ are the network parameters. This results in two sets of variables to be optimized: $Y$ for the label segments and $$\Theta$$ for the deep learning network’s parameters. In the paper, the researchers propose an alternative optimization framework, in which they fix $Y$ or $$\Theta$$ and optimize the other.
+where $$\Theta$$ are the network parameters. This results in two sets of variables to be optimized: $$Y$$ for the label segments and $$\Theta$$ for the deep learning network’s parameters. In the paper, the researchers propose an alternative optimization framework, in which they fix $$Y$$ or $$\Theta$$ and optimize the other.
 
 One major contribution of this paper was the dataset, in which they used the Amazon Mechanical Turk (AMT) platform to obtain scribble annotations on the PASCAL VOC datasets. The PASCAL-Scribble dataset is now publicly available and used by researchers to compare their approaches.
 
@@ -47,7 +49,7 @@ Similar to the previous work, the "On Regularized Losses for Weakly-supervised C
 $$
 arg\,min_{\theta} \sum_{p \in \Omega_{L}}H(Y_p,S_p)+\sum_{p \in \Omega_{U}}H(X_p,S_p)\;\;S \equiv f_{\theta}(I)$$
 
-where $$Y$$ are the set of labeled pixels, $$X$$ is the set of proposed groundtruth,  $$f_{\theta}(I)$$ is the network outputs, $$\Omega_{L}$$ are the set of labeled pixels, $$\Omega_{U}$$ are the set of unlabeled pixels, and $$H$$ is the standard cross entropy loss. Is discussed before, $$X$$ is fixed. The objective for the groundtruth proposal is 
+where $$Y$$ are the set of labeled pixels, $$X$$ is the set of proposed groundtruth,  $$f_{\theta}(I)$$ is the network outputs, $$\Omega_{L}$$ are the set of labeled pixels, $$\Omega_{U}$$ are the set of unlabeled pixels, and $$H$$ is the standard cross entropy loss. As discussed before, $$X$$ is fixed. The objective for the groundtruth proposal is 
 
 $$
 arg\,min_{X} \sum_{p \in \Omega_{U}}H(X_p,S_p) + \lambda R(X)
@@ -95,7 +97,7 @@ The metric results for three different approaches can be seen here on PASCAL VOC
 <br>
 As can be seen, the ScribbleSup results are outperformed by the more recent papers. One noticable shift in recent papers is the emphasis on generating pixel-wise groundtruth proposals (DenseCRF Loss and TEL) rather than segment-wise groundtruth proposals (ScribbleSup). Additionally, ScribbleSup's reliance on static segments may have been detrimental: both DenseCRF Loss and TEL are not limited in this way. 
 
-TEL performs slightly better than DenseCRF Loss though the results are similar. However, TEL does not require alternating optimization and has a simpler training procedure. While both approaches generate pixel-level groundtruth proposals, TEL also utilizes both high-level and low-level semantic features to generate these while the DenseCRF Loss approach relies on only low-level features.
+TEL performs slightly better than DenseCRF Loss though the results are similar. However, TEL does not require alternating optimization and has a simpler training procedure. While both approaches generate pixel-level groundtruth proposals, TEL also utilizes both high-level and low-level semantic features to generate these while the DenseCRF Loss approach relies on only low-level features. This suggests future models will also consider how to creatively utilize low-level and high-level image features to boost model performance.
 
 ## Conclusion
 
